@@ -44,3 +44,16 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - Public website uses the Render API for shared listings across all devices.
 - CORS enabled for marketplace.tcstowing.co.za.
 - New adverts are stored centrally, remain pending, and become public after Admin approval.
+
+#### Build37 live Render API link
+- Public GitHub Pages frontend now connects to https://marketplace-c3wq.onrender.com.
+- Admin review wording now reflects shared marketplace storage.
+
+#### Build38 AssetTrack 360 navigation link
+- Added AssetTrack 360 to the top navigation across all marketplace pages.
+- Link opens https://assettrack360.wykiesautomation.co.za in a new tab.
+
+#### Build39 Wykies Marketplace navigation link
+- Added Wykies Marketplace to the top navigation across all marketplace pages.
+- Link opens https://marketplace.wykiesautomation.co.za/ in a new tab.
+- Existing AssetTrack 360 link and all Build38 fixes retained.

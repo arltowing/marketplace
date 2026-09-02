@@ -1,4 +1,4 @@
-const TCS_API_BASE=window.location.origin;function apiUrl(path){return TCS_API_BASE+path}
+const TCS_API_BASE='https://marketplace-c3wq.onrender.com';function apiUrl(path){return TCS_API_BASE+path}
 const KEY='stm_demo_listings_enabled';
 async function api(url,opt){const r=await fetch(apiUrl(url),opt);const x=await r.json().catch(()=>({error:'Invalid response'}));if(!r.ok)throw Error(x.error||'Request failed');return x}
 function applyUi(enabled,scope){document.getElementById('demoToggle').checked=enabled;const s=document.getElementById('demoStatus');s.textContent=enabled?'DEMO LISTINGS ON':'DEMO LISTINGS OFF';s.className='status '+(enabled?'pending':'approved');document.getElementById('demoResult').innerHTML=`Current setting: <b>${enabled?'ON':'OFF'}</b> · ${scope==='server'?'Saved globally on the Node backend.':'Static Pages browser fallback.'}`}
