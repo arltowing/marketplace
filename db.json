@@ -1,0 +1,91 @@
+{
+  "meta": {
+    "schemaVersion": 27,
+    "build": "Build27-fleet-machinery-services",
+    "product": "TCS Marketplace"
+  },
+  "settings": {
+    "demoListingsEnabled": true,
+    "listingExpiryDays": 60,
+    "marketplacePublicName": "TCS Marketplace"
+  },
+  "users": [
+    {
+      "id": "u_admin_1",
+      "role": "admin",
+      "email": "admin@softwaretools.local",
+      "name": "Marketplace Admin",
+      "passwordHash": "6e2bef0a6a94d33ca3d875de52a5080fc1d267003dd23f9f18e71ef2f2c247e4",
+      "status": "active",
+      "createdAt": "2026-06-26T00:00:00Z"
+    },
+    {
+      "id": "u_seller_1",
+      "role": "seller",
+      "email": "seller@softwaretools.local",
+      "name": "Demo Seller",
+      "sellerName": "APC Utilities",
+      "passwordHash": "4c8934905abc115b9d8eed8a814a344e653c71ae4378cedb472d79982c8094b9",
+      "status": "approved",
+      "createdAt": "2026-06-26T00:00:00Z"
+    }
+  ],
+  "sellerApplications": [],
+  "sellerProfiles": [
+    {
+      "id": "sp_001",
+      "userId": "u_seller_1",
+      "sellerName": "APC Utilities",
+      "status": "approved",
+      "payoutMethod": "Manual EFT",
+      "bankName": "Demo Bank",
+      "accountHolder": "APC Utilities",
+      "accountNumber": "demo-ref",
+      "approvedAt": "2026-06-26T00:00:00Z",
+      "approvedBy": "u_admin_1"
+    }
+  ],
+  "products": [],
+  "fileRecords": [],
+  "orders": [],
+  "tokens": [],
+  "checkoutIntents": [],
+  "payoutLedger": [],
+  "sellerBalances": [],
+  "payoutBatches": [],
+  "payfastDiagnostics": [],
+  "notifications": [],
+  "notificationTemplates": [],
+  "events": [],
+  "physicalListings": [
+    {
+      "id": "listing_demo_1",
+      "sellerId": "u_seller_1",
+      "listingKind": "service",
+      "category": "Towing Services",
+      "title": "TSC Towing and Recovery Services",
+      "slug": "tsc-towing-recovery-services",
+      "price": 850,
+      "priceType": "From",
+      "make": "",
+      "model": "",
+      "year": "",
+      "usage": "",
+      "condition": "Service",
+      "province": "Gauteng",
+      "town": "Vanderbijlpark",
+      "description": "Vehicle towing, roadside assistance and recovery services. Contact the seller for availability and a final quotation.",
+      "phone": "0820000000",
+      "whatsapp": "27820000000",
+      "images": [],
+      "coverImage": "",
+      "status": "active",
+      "approvalStatus": "approved",
+      "createdAt": "2026-09-01T08:00:00Z",
+      "approvedAt": "2026-09-01T08:00:00Z",
+      "approvedBy": "u_admin_1"
+    }
+  ],
+  "listingReports": [],
+  "listingMessages": []
+}

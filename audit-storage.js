@@ -1,0 +1,1 @@
+const fs=require('fs');const dirs=['storage/uploads','storage/quarantine','storage/packages','storage/rejected','storage/reports','data/backups','exports'];console.log(JSON.stringify(dirs.map(d=>({dir:d,exists:fs.existsSync(d),files:fs.existsSync(d)?fs.readdirSync(d).length:0})),null,2));

@@ -1,0 +1,56 @@
+{
+  "version": 26,
+  "collections": {
+    "users": {
+      "primaryKey": "id"
+    },
+    "sellerApplications": {
+      "primaryKey": "id"
+    },
+    "sellerProfiles": {
+      "primaryKey": "id"
+    },
+    "products": {
+      "primaryKey": "id"
+    },
+    "fileRecords": {
+      "primaryKey": "id"
+    },
+    "orders": {
+      "primaryKey": "id"
+    },
+    "tokens": {
+      "primaryKey": "id"
+    },
+    "checkoutIntents": {
+      "primaryKey": "id"
+    },
+    "payoutLedger": {
+      "primaryKey": "id"
+    },
+    "sellerBalances": {
+      "primaryKey": "id"
+    },
+    "payoutBatches": {
+      "primaryKey": "id"
+    },
+    "payfastDiagnostics": {
+      "primaryKey": "id"
+    },
+    "notifications": {
+      "primaryKey": "id"
+    },
+    "events": {
+      "primaryKey": "id"
+    },
+    "physicalListings": {
+      "primaryKey": "id"
+    },
+    "listingReports": {
+      "primaryKey": "id"
+    },
+    "listingMessages": {
+      "primaryKey": "id"
+    }
+  }
+}
