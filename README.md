@@ -39,3 +39,8 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - Trust strip, category introduction, market identity visual, selling steps and improved public hierarchy.
 - Mobile responsive, accessible reduced-motion support and no invented sales claims.
 - All Build32 Admin access, contacts, advert photos and approval functions retained.
+
+#### Build35 shared public adverts
+- Public website uses the Render API for shared listings across all devices.
+- CORS enabled for marketplace.tcstowing.co.za.
+- New adverts are stored centrally, remain pending, and become public after Admin approval.
