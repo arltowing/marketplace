@@ -28,7 +28,7 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 
 
 ### Build32 admin access and TCS contacts
-- Static test-stage Admin allowlist: Rudolphvanwyk@rockmail.com, arltowing0@gmail.com, janplessis@yahoo.co.uk.
+- Static test-stage Admin allowlist: Rudolphvanwyk@rocketmail.com, theosteynplant@gmail.com, janplessis@yahoo.co.uk.
 - Admin sign-in gate, session-only access and sign-out control.
 - TCS support phones, WhatsApp links and public support emails added.
 - Production warning retained: real security requires server-side password authentication.

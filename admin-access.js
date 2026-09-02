@@ -1,8 +1,8 @@
 /* Build32 static admin access gate. Test-stage only; production requires server authentication. */
 const TCS_ADMIN_SESSION_KEY='tcs_marketplace_admin_email_v1';
 const TCS_ADMIN_ALLOWLIST=[
-  'rudolphvanwyk@rockmail.com',
-  'arltowing0@gmail.com',
+  'rudolphvanwyk@rocketmail.com',
+  'theosteynplant@gmail.com',
   'janplessis@yahoo.co.uk'
 ];
 function normalEmail(v){return String(v||'').trim().toLowerCase()}
