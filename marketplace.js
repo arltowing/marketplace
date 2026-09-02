@@ -1,4 +1,4 @@
-const TCS_API_BASE = 'https://marketplace-api-o19b.onrender.com';
+const TCS_API_BASE = window.location.origin;
 function apiUrl(path){return TCS_API_BASE+path}
 
 const demoListings = [
