@@ -1,0 +1,1 @@
+const{readDb}=require('./db');function requireRole(role){return(req,res,next)=>{const id=req.headers['x-demo-user']||req.cookies?.stm_uid;const u=(readDb().users||[]).find(x=>x.id===id&&x.role===role);if(!u)return res.status(401).json({error:'Unauthorized'});req.currentUser=u;next()}}module.exports={requireRole};
