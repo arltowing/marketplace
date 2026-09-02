@@ -1,0 +1,18 @@
+const express=require('express');
+const config=require('./src/config');
+const {parseCookies,setSecurityHeaders,rateLimit}=require('./src/security');
+const fs=require('fs');
+[config.uploadDir,config.listingImageDir,config.backupDir].forEach(d=>fs.mkdirSync(d,{recursive:true}));
+const app=express();
+app.set('trust proxy',1);
+app.use(parseCookies);app.use(setSecurityHeaders);app.use(rateLimit());
+app.use(express.json({limit:'2mb'}));app.use(express.urlencoded({extended:true}));
+app.get('/api/health',(req,res)=>res.json({ok:true,service:'tcs-marketplace',build:'27-fleet-machinery-services'}));
+app.use('/api/listings',require('./src/routes/listings'));
+app.use('/api/marketplace-settings',require('./src/routes/marketplaceSettings'));
+app.use('/api/marketplace-live',require('./src/routes/marketplaceLive'));
+app.use('/api/admin/sellers',require('./src/routes/adminSellers'));
+app.use('/api/seller',require('./src/routes/seller'));
+app.use('/listing-images',express.static(config.listingImageDir,{maxAge:'7d'}));
+app.use(express.static(__dirname,{extensions:['html']}));
+app.listen(config.port,'0.0.0.0',()=>console.log('TCS Marketplace listening on port '+config.port));

@@ -1,0 +1,6 @@
+node_modules
+.env
+*.log
+data/backups/*
+storage/uploads/*
+storage/listing-images/*
