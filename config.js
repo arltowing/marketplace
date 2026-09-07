@@ -1,1 +1,9 @@
-const path=require('path');module.exports={port:Number(process.env.PORT||3000),appBaseUrl:process.env.APP_BASE_URL||'http://localhost:3000',dataFile:path.resolve(process.env.DB_JSON_FILE||'data/db.json'),uploadDir:path.resolve(process.env.UPLOAD_DIR||'storage/uploads'),listingImageDir:path.resolve(process.env.LISTING_IMAGE_DIR||'storage/listing-images'),backupDir:path.resolve(process.env.BACKUP_DIR||'data/backups')};
+const path=require('path');
+module.exports={
+  port:Number(process.env.PORT||3000),
+  appBaseUrl:process.env.APP_BASE_URL||'http://localhost:3000',
+  dataFile:path.resolve(process.env.DB_JSON_FILE||'db.json'),
+  uploadDir:path.resolve(process.env.UPLOAD_DIR||'storage/uploads'),
+  listingImageDir:path.resolve(process.env.LISTING_IMAGE_DIR||'storage/listing-images'),
+  backupDir:path.resolve(process.env.BACKUP_DIR||'data/backups')
+};
