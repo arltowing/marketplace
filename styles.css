@@ -41,3 +41,6 @@ body{background:radial-gradient(circle at 10% 0,rgba(37,99,235,.07),transparent 
 @media(max-width:900px){.hero-transport-visual{width:330px;height:330px}}
 @media(max-width:780px){.hero-transport-visual{width:270px;height:270px}.hero-transport-art{border-radius:22px}}
 @media(prefers-reduced-motion:reduce){.hero-transport-visual{animation:none}}
+
+/* Build45 full advert administration */
+.admin-toolbar{display:flex;align-items:end;gap:14px;flex-wrap:wrap;margin-bottom:20px}.admin-toolbar label{min-width:220px}.admin-toolbar select{margin-bottom:0}.admin-manage-card{display:flex;flex-direction:column;gap:10px}.admin-manage-card label{font-weight:800}.admin-manage-card input,.admin-manage-card textarea,.admin-manage-card select{margin-bottom:4px}.admin-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.admin-card-head small{color:var(--muted);overflow-wrap:anywhere}@media(max-width:780px){.admin-toolbar{display:grid}.admin-toolbar>*{width:100%}.admin-manage-card .split{grid-template-columns:1fr}}

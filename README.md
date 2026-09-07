@@ -88,3 +88,9 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - New hero artwork shows a rollback tow truck carrying a vehicle and a lowbed truck carrying heavy machinery.
 - Retained the soft up-and-down hero animation and responsive sizing.
 - Build43 public upload fix, no-demo behavior, and navigation cleanup remain intact.
+
+######## Build45 full Admin advert management
+- Admin can view all adverts across pending, active, paused, sold, rejected, suspended and draft states.
+- Admin can correct title, price, price type, description, town and province.
+- Admin can approve pending adverts, suspend or reactivate live adverts.
+- Admin can permanently delete adverts, uploaded photos, linked reports and linked enquiries after double confirmation.
