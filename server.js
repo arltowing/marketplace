@@ -9,7 +9,7 @@ app.use((req,res,next)=>{const origin=req.headers.origin;if(origin&&allowedOrigi
 app.set('trust proxy',1);
 app.use(parseCookies);app.use(setSecurityHeaders);app.use(rateLimit());
 app.use(express.json({limit:'2mb'}));app.use(express.urlencoded({extended:true}));
-app.get('/api/health',(req,res)=>res.json({ok:true,service:'tcs-marketplace',build:'40-one-shared-marketplace'}));
+app.get('/api/health',(req,res)=>res.json({ok:true,service:'tcs-marketplace',build:'43-public-upload-fix'}));
 app.use('/api/listings',require('./src/routes/listings'));
 app.use('/api/marketplace-settings',require('./src/routes/marketplaceSettings'));
 app.use('/api/marketplace-live',require('./src/routes/marketplaceLive'));

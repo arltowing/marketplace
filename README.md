@@ -75,3 +75,16 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 ###### Build42 navigation cleanup
 - Removed the Wykies Marketplace navigation link from all pages.
 - AssetTrack 360 and all Build41 no-demo live testing fixes remain.
+
+###### Build43 public upload API fix
+- Fixed Place Advert receiving HTML instead of JSON.
+- Public advert submission no longer depends on the demo seller header.
+- Added JFIF image upload support.
+- Added robust API response validation and a clear success reference.
+- Demo adverts remain removed.
+
+###### Build44 rollback and lowbed hero visual
+- Replaced the yellow crane emoji with a polished combined transport visual.
+- New hero artwork shows a rollback tow truck carrying a vehicle and a lowbed truck carrying heavy machinery.
+- Retained the soft up-and-down hero animation and responsive sizing.
+- Build43 public upload fix, no-demo behavior, and navigation cleanup remain intact.
