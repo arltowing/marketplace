@@ -57,3 +57,10 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - Added Wykies Marketplace to the top navigation across all marketplace pages.
 - Link opens https://marketplace.wykiesautomation.co.za/ in a new tab.
 - Existing AssetTrack 360 link and all Build38 fixes retained.
+
+##### Build40 one shared public marketplace
+- Fixed CORS for both marketplace.tcstowing.co.za and marketplace.wykiesautomation.co.za.
+- Removed browser-local advert storage that isolated each customer's adverts.
+- Every submitted advert now uses the single Render database and shared Admin approval queue.
+- Every approved advert is returned on the same public Marketplace page for all visitors.
+- Render-hosted listing image paths are resolved correctly from either public domain.
