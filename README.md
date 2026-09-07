@@ -94,3 +94,9 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - Admin can correct title, price, price type, description, town and province.
 - Admin can approve pending adverts, suspend or reactivate live adverts.
 - Admin can permanently delete adverts, uploaded photos, linked reports and linked enquiries after double confirmation.
+
+######## Build46 Admin Help and Diagnostics
+- Added a dummy-proof Admin Help & Diagnostics page.
+- Added one-click backend health and approved public advert checks.
+- Added direct links to pending review, all advert management, public marketplace and test advert placement.
+- Admin no longer needs to type or edit API URLs manually.
