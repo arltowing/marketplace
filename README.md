@@ -64,3 +64,14 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - Every submitted advert now uses the single Render database and shared Admin approval queue.
 - Every approved advert is returned on the same public Marketplace page for all visitors.
 - Render-hosted listing image paths are resolved correctly from either public domain.
+
+###### Build41 clean live testing
+- Permanently removed all six hard-coded demo listings.
+- Removed demo fallback behavior and the demo visibility toggle.
+- Removed seeded demo physical listings from db.json.
+- Public Marketplace now shows only real shared-backend adverts approved by Admin.
+- Empty marketplace now displays a clean no-approved-listings state for testing.
+
+###### Build42 navigation cleanup
+- Removed the Wykies Marketplace navigation link from all pages.
+- AssetTrack 360 and all Build41 no-demo live testing fixes remain.

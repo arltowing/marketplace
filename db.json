@@ -1,11 +1,11 @@
 {
   "meta": {
     "schemaVersion": 27,
-    "build": "Build27-fleet-machinery-services",
+    "build": "Build41-clean-live-test",
     "product": "TCS Marketplace"
   },
   "settings": {
-    "demoListingsEnabled": true,
+    "demoListingsEnabled": false,
     "listingExpiryDays": 60,
     "marketplacePublicName": "TCS Marketplace"
   },
@@ -57,35 +57,7 @@
   "notifications": [],
   "notificationTemplates": [],
   "events": [],
-  "physicalListings": [
-    {
-      "id": "listing_demo_1",
-      "sellerId": "u_seller_1",
-      "listingKind": "service",
-      "category": "Towing Services",
-      "title": "TSC Towing and Recovery Services",
-      "slug": "tsc-towing-recovery-services",
-      "price": 850,
-      "priceType": "From",
-      "make": "",
-      "model": "",
-      "year": "",
-      "usage": "",
-      "condition": "Service",
-      "province": "Gauteng",
-      "town": "Vanderbijlpark",
-      "description": "Vehicle towing, roadside assistance and recovery services. Contact the seller for availability and a final quotation.",
-      "phone": "0820000000",
-      "whatsapp": "27820000000",
-      "images": [],
-      "coverImage": "",
-      "status": "active",
-      "approvalStatus": "approved",
-      "createdAt": "2026-09-01T08:00:00Z",
-      "approvedAt": "2026-09-01T08:00:00Z",
-      "approvedBy": "u_admin_1"
-    }
-  ],
+  "physicalListings": [],
   "listingReports": [],
   "listingMessages": []
 }
