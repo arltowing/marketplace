@@ -1,4 +1,4 @@
-const TCS_API_BASE = 'https://marketplace-c3wq.onrender.com';
+const TCS_API_BASE=window.TCS_MARKETPLACE_API_BASE||window.location.origin;
 function apiUrl(path){return TCS_API_BASE+path}
 
 

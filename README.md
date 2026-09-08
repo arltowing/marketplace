@@ -95,8 +95,10 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - Admin can approve pending adverts, suspend or reactivate live adverts.
 - Admin can permanently delete adverts, uploaded photos, linked reports and linked enquiries after double confirmation.
 
-######## Build46 Admin Help and Diagnostics
-- Added a dummy-proof Admin Help & Diagnostics page.
-- Added one-click backend health and approved public advert checks.
-- Added direct links to pending review, all advert management, public marketplace and test advert placement.
-- Admin no longer needs to type or edit API URLs manually.
+######## Build47 Neon-ready database
+- Added Neon PostgreSQL persistence through DATABASE_URL.
+- Removed browser hard-coding to the old Render API origin.
+- Added runtime API configuration for deployment on any Node host.
+- Added automatic schema creation and first-run import from db.json.
+- Added Neon database status to /api/health.
+- Render is no longer required as the database provider.

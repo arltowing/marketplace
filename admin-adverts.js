@@ -1,4 +1,4 @@
-const TCS_API_BASE='https://marketplace-c3wq.onrender.com';
+const TCS_API_BASE=window.TCS_MARKETPLACE_API_BASE||window.location.origin;
 function apiUrl(p){return TCS_API_BASE+p}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 async function api(path,opt={}){const r=await fetch(apiUrl(path),opt);const x=await r.json().catch(()=>({error:'Invalid server response'}));if(!r.ok)throw Error(x.error||'Request failed');return x}
