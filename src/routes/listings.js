@@ -1,21 +1,67 @@
-const express=require('express'),multer=require('multer'),path=require('path'),fs=require('fs');
-const config=require('../config');const{requireRole}=require('../auth');const{readDb,writeDb,addEvent}=require('../db');
-const r=express.Router();fs.mkdirSync(config.listingImageDir,{recursive:true});
-const allowed=new Set(['.jpg','.jpeg','.jfif','.png','.webp']);
-const upload=multer({dest:config.uploadDir,limits:{fileSize:10*1024*1024,files:12},fileFilter:(req,file,cb)=>cb(null,allowed.has(path.extname(file.originalname).toLowerCase()))});
+const express=require('express');
+const multer=require('multer');
+const {requireRole}=require('../auth');
+const db=require('../neonDb');
+const storage=require('../neonStorage');
+const r=express.Router();
+const allowed=new Set(['image/jpeg','image/jpg','image/png','image/webp']);
+const upload=multer({storage:multer.memoryStorage(),limits:{fileSize:10*1024*1024,files:12},fileFilter:(req,file,cb)=>cb(null,allowed.has(file.mimetype)||String(file.originalname).toLowerCase().endsWith('.jfif'))});
 function clean(v,n=500){return String(v||'').trim().slice(0,n)}
 function slugify(v){return clean(v,100).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'-'+Date.now()}
-function publicListing(x){return {...x,phone:x.phone||'',whatsapp:x.whatsapp||''}}
-r.get('/public',(req,res)=>{let rows=(readDb().physicalListings||[]).filter(x=>x.status==='active'&&x.approvalStatus==='approved');const q=clean(req.query.q,100).toLowerCase(),cat=clean(req.query.category,80),province=clean(req.query.province,80);if(q)rows=rows.filter(x=>(x.title+' '+x.description+' '+x.category+' '+x.town).toLowerCase().includes(q));if(cat)rows=rows.filter(x=>x.category===cat);if(province)rows=rows.filter(x=>x.province===province);res.json(rows.map(publicListing))});
-r.get('/public/:slug',(req,res)=>{const x=(readDb().physicalListings||[]).find(x=>x.slug===req.params.slug&&x.status==='active'&&x.approvalStatus==='approved');if(!x)return res.status(404).json({error:'Listing not found'});res.json(publicListing(x))});
-r.post('/create',upload.array('images',12),(req,res)=>{const db=readDb();if(!clean(req.body.title)||!clean(req.body.category)||!clean(req.body.description))return res.status(400).json({error:'Title, category and description are required'});const id='listing_'+Date.now();const imgs=(req.files||[]).map((file,i)=>{const ext=path.extname(file.originalname).toLowerCase();const name=id+'_'+(i+1)+ext;fs.renameSync(file.path,path.join(config.listingImageDir,name));return '/listing-images/'+name});const x={id,sellerId:clean(req.body.sellerEmail||req.body.phone||req.body.whatsapp||'public-seller',160),listingKind:clean(req.body.listingKind||'item',30),category:clean(req.body.category,80),title:clean(req.body.title,120),slug:slugify(req.body.title),price:Number(req.body.price||0),priceType:clean(req.body.priceType||'Fixed',30),make:clean(req.body.make,60),model:clean(req.body.model,60),year:clean(req.body.year,10),usage:clean(req.body.usage,40),condition:clean(req.body.condition,40),province:clean(req.body.province,60),town:clean(req.body.town,80),description:clean(req.body.description,3000),phone:clean(req.body.phone,30),whatsapp:clean(req.body.whatsapp,30).replace(/\D/g,''),images:imgs,coverImage:imgs[0]||'',status:'draft',approvalStatus:'pending',createdAt:new Date().toISOString(),approvedAt:'',approvedBy:'',rejectReason:''};db.physicalListings=db.physicalListings||[];db.physicalListings.unshift(x);writeDb(db);addEvent('seller.listing_submitted','Physical listing submitted',{listingId:id});res.json({ok:true,listing:x})});
-r.get('/mine',requireRole('seller'),(req,res)=>res.json((readDb().physicalListings||[]).filter(x=>x.sellerId===req.currentUser.id)));
-r.post('/:id/status',requireRole('seller'),(req,res)=>{const db=readDb(),x=(db.physicalListings||[]).find(x=>x.id===req.params.id&&x.sellerId===req.currentUser.id);if(!x)return res.status(404).json({error:'Listing not found'});const status=clean(req.body.status,20);if(!['active','paused','sold','draft'].includes(status))return res.status(400).json({error:'Invalid status'});x.status=status;writeDb(db);res.json({ok:true,listing:x})});
-r.get('/admin/pending',requireRole('admin'),(req,res)=>res.json((readDb().physicalListings||[]).filter(x=>x.approvalStatus==='pending')));
-r.get('/admin/all',requireRole('admin'),(req,res)=>res.json((readDb().physicalListings||[]).sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||'')))));
-r.patch('/admin/:id',requireRole('admin'),(req,res)=>{const db=readDb(),x=(db.physicalListings||[]).find(v=>v.id===req.params.id);if(!x)return res.status(404).json({error:'Listing not found'});const textFields=['title','description','category','make','model','year','usage','condition','province','town','priceType','phone','whatsapp'];for(const k of textFields)if(req.body[k]!==undefined)x[k]=clean(req.body[k],k==='description'?3000:160);if(req.body.price!==undefined){const n=Number(req.body.price);if(!Number.isFinite(n)||n<0)return res.status(400).json({error:'Invalid price'});x.price=n}x.updatedAt=new Date().toISOString();x.updatedBy=req.currentUser.id;writeDb(db);res.json({ok:true,listing:x})});
-r.delete('/admin/:id',requireRole('admin'),(req,res)=>{const db=readDb(),i=(db.physicalListings||[]).findIndex(v=>v.id===req.params.id);if(i<0)return res.status(404).json({error:'Listing not found'});const x=db.physicalListings[i];for(const image of (x.images||[])){const name=path.basename(String(image||''));if(name){const target=path.join(config.listingImageDir,name);if(fs.existsSync(target))try{fs.unlinkSync(target)}catch(e){}}}db.physicalListings.splice(i,1);db.listingReports=(db.listingReports||[]).filter(v=>v.listingId!==x.id);db.listingMessages=(db.listingMessages||[]).filter(v=>v.listingId!==x.id);writeDb(db);res.json({ok:true,deletedId:x.id})});
-r.post('/admin/:id/approve',requireRole('admin'),(req,res)=>{const db=readDb(),x=(db.physicalListings||[]).find(x=>x.id===req.params.id);if(!x)return res.status(404).json({error:'Listing not found'});x.status='active';x.approvalStatus='approved';x.approvedAt=new Date().toISOString();x.approvedBy=req.currentUser.id;writeDb(db);res.json({ok:true,listing:x})});
-r.post('/admin/:id/reject',requireRole('admin'),(req,res)=>{const db=readDb(),x=(db.physicalListings||[]).find(x=>x.id===req.params.id);if(!x)return res.status(404).json({error:'Listing not found'});x.status='rejected';x.approvalStatus='rejected';x.rejectReason=clean(req.body.reason||'Rejected',300);writeDb(db);res.json({ok:true,listing:x})});
-r.post('/public/:id/report',(req,res)=>{const db=readDb();db.listingReports=db.listingReports||[];db.listingReports.unshift({id:'report_'+Date.now(),listingId:req.params.id,reason:clean(req.body.reason,500),createdAt:new Date().toISOString(),status:'open'});writeDb(db);res.json({ok:true})});
+function id(prefix){return prefix+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)}
+function imageUrls(images){return (images||[]).map(x=>typeof x==='string'?x:x.url).filter(Boolean)}
+function publicListing(x){const y=db.mapListing(x);y.images=imageUrls(y.images);y.coverImage=y.images[0]||'';return y}
+function asyncRoute(fn){return(req,res,next)=>Promise.resolve(fn(req,res,next)).catch(next)}
+
+r.get('/public',asyncRoute(async(req,res)=>{
+  const values=[],where=["status='active'","approval_status='approved'"];
+  const q=clean(req.query.q,100),cat=clean(req.query.category,80),province=clean(req.query.province,80);
+  if(q){values.push('%'+q.toLowerCase()+'%');where.push(`lower(concat_ws(' ',title,description,category,town,make,model)) like $${values.length}`)}
+  if(cat){values.push(cat);where.push(`category=$${values.length}`)}
+  if(province){values.push(province);where.push(`province=$${values.length}`)}
+  const result=await db.query(`select * from marketplace_listings where ${where.join(' and ')} order by created_at desc`,values);
+  res.json(result.rows.map(publicListing));
+}));
+
+r.get('/public/:slug',asyncRoute(async(req,res)=>{
+  const result=await db.query("select * from marketplace_listings where slug=$1 and status='active' and approval_status='approved' limit 1",[req.params.slug]);
+  if(!result.rows[0])return res.status(404).json({error:'Listing not found'});
+  res.json(publicListing(result.rows[0]));
+}));
+
+r.post('/create',upload.array('images',12),asyncRoute(async(req,res)=>{
+  const title=clean(req.body.title,120),category=clean(req.body.category,80),description=clean(req.body.description,3000);
+  if(!title||!category||!description)return res.status(400).json({error:'Title, category and description are required'});
+  const listingId=id('listing'),slug=slugify(title);
+  let stored=[];
+  try{
+    stored=await storage.uploadImages(listingId,req.files||[]);
+    const values=[listingId,clean(req.body.sellerEmail||req.body.phone||req.body.whatsapp||'public-seller',160),clean(req.body.listingKind||'item',30),category,title,slug,Number(req.body.price||0),clean(req.body.priceType||'Fixed',30),clean(req.body.make,60),clean(req.body.model,60),clean(req.body.year,10),clean(req.body.usage,40),clean(req.body.condition,40),clean(req.body.province,60),clean(req.body.town,80),description,clean(req.body.phone,30),clean(req.body.whatsapp,30).replace(/\D/g,''),JSON.stringify(stored),stored[0]?.url||''];
+    const result=await db.query(`insert into marketplace_listings (id,seller_id,listing_kind,category,title,slug,price,price_type,make,model,year,usage,condition,province,town,description,phone,whatsapp,images,cover_image,status,approval_status) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19::jsonb,$20,'draft','pending') returning *`,values);
+    await db.query("insert into marketplace_events(event_type,message,metadata) values('seller.listing_submitted','Physical listing submitted',$1::jsonb)",[JSON.stringify({listingId})]);
+    res.json({ok:true,listing:publicListing(result.rows[0]),storage:'neon'});
+  }catch(e){
+    if(stored.length)await storage.deleteImages(stored).catch(()=>{});
+    throw e;
+  }
+}));
+
+r.get('/admin/pending',requireRole('admin'),asyncRoute(async(req,res)=>{const x=await db.query("select * from marketplace_listings where approval_status='pending' order by created_at desc");res.json(x.rows.map(publicListing))}));
+r.get('/admin/all',requireRole('admin'),asyncRoute(async(req,res)=>{const x=await db.query('select * from marketplace_listings order by created_at desc');res.json(x.rows.map(publicListing))}));
+r.post('/admin/:id/approve',requireRole('admin'),asyncRoute(async(req,res)=>{const x=await db.query("update marketplace_listings set status='active',approval_status='approved',approved_at=now(),approved_by=$2,updated_at=now() where id=$1 returning *",[req.params.id,req.currentUser.id]);if(!x.rows[0])return res.status(404).json({error:'Listing not found'});res.json({ok:true,listing:publicListing(x.rows[0])})}));
+r.post('/admin/:id/reject',requireRole('admin'),asyncRoute(async(req,res)=>{const x=await db.query("update marketplace_listings set status='rejected',approval_status='rejected',reject_reason=$2,updated_at=now() where id=$1 returning *",[req.params.id,clean(req.body.reason||'Rejected',300)]);if(!x.rows[0])return res.status(404).json({error:'Listing not found'});res.json({ok:true,listing:publicListing(x.rows[0])})}));
+r.patch('/admin/:id',requireRole('admin'),asyncRoute(async(req,res)=>{
+  const current=await db.query('select * from marketplace_listings where id=$1',[req.params.id]);if(!current.rows[0])return res.status(404).json({error:'Listing not found'});
+  const c=current.rows[0],price=req.body.price===undefined?c.price:Number(req.body.price);if(!Number.isFinite(Number(price))||Number(price)<0)return res.status(400).json({error:'Invalid price'});
+  const v=[req.params.id,clean(req.body.title??c.title,120),Number(price),clean(req.body.priceType??c.price_type,30),clean(req.body.description??c.description,3000),clean(req.body.town??c.town,80),clean(req.body.province??c.province,60),req.currentUser.id];
+  const x=await db.query('update marketplace_listings set title=$2,price=$3,price_type=$4,description=$5,town=$6,province=$7,updated_by=$8,updated_at=now() where id=$1 returning *',v);res.json({ok:true,listing:publicListing(x.rows[0])});
+}));
+r.delete('/admin/:id',requireRole('admin'),asyncRoute(async(req,res)=>{
+  const x=await db.query('select * from marketplace_listings where id=$1',[req.params.id]);if(!x.rows[0])return res.status(404).json({error:'Listing not found'});
+  const images=Array.isArray(x.rows[0].images)?x.rows[0].images:[];
+  await storage.deleteImages(images);
+  await db.query('delete from marketplace_listings where id=$1',[req.params.id]);
+  res.json({ok:true,deletedId:req.params.id,deletedImages:images.length});
+}));
+r.post('/public/:id/report',asyncRoute(async(req,res)=>{const reportId=id('report');await db.query('insert into marketplace_reports(id,listing_id,reason,status) values($1,$2,$3,\'open\')',[reportId,req.params.id,clean(req.body.reason,500)]);res.json({ok:true,reference:reportId})}));
 module.exports=r;
