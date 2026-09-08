@@ -21,3 +21,5 @@ INITIAL ADMIN ALLOWLIST
 Each address must be represented by a valid Google Account to use Google Sign-In.
 No Google Client Secret is used or required.
 Admin sessions last eight hours and can be revoked at sign-out.
+
+Two additional Google accounts supplied for Admin access are also included.

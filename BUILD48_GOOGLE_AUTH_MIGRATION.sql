@@ -32,5 +32,7 @@ CREATE TABLE IF NOT EXISTS marketplace_admin_audit (
 INSERT INTO marketplace_admin_users(email,display_name) VALUES
  ('rudolphvanwyk@rocketmail.com','TCS Admin'),
  ('theosteynplant@gmail.com','TCS Admin'),
- ('janplessis@yahoo.co.uk','TCS Admin')
+ ('janplessis@yahoo.co.uk','TCS Admin'),
+ ('janes.vanwyk@gmail.com','TCS Admin'),
+ ('wykiesautomation@gmail.com','TCS Admin')
 ON CONFLICT(email) DO NOTHING;
