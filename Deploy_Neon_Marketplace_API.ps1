@@ -1,7 +1,7 @@
-param(
+﻿param(
   [string]$ProjectId = "sparkling-bread-64139319",
   [string]$BranchId = "br-fancy-fire-ayw6kkh2",
-  [string]$FunctionName = "marketplace-api"
+  [string]$FunctionName = "marketplaceapi"
 )
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
@@ -20,6 +20,13 @@ try {
   if ($LASTEXITCODE -ne 0) { throw "npm install failed." }
   neon link --project-id $ProjectId --branch-id $BranchId
   if ($LASTEXITCODE -ne 0) { throw "Neon project link failed." }
+  node .\run-migration.mjs
+  if ($LASTEXITCODE -ne 0) { throw "Build48 authentication migration failed." }
+  Write-Host "Google Admin migration complete." -ForegroundColor Green
+  # project is already linked above
+  echo "Linked" | Out-Null
+  # continue deployment
+
   Write-Host "Deploying $FunctionName directly to Neon Functions..." -ForegroundColor Cyan
   neon function deploy $FunctionName --src .\marketplace-api.ts
   if ($LASTEXITCODE -ne 0) { throw "Neon Function deployment failed." }

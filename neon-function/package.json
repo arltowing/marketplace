@@ -1,14 +1,17 @@
 {
   "name": "tcs-marketplace-neon-function",
-  "version": "47.0.0",
+  "version": "48.0.0",
   "private": true,
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.883.0",
     "@neondatabase/serverless": "^1.0.2",
-    "hono": "^4.9.6"
+    "hono": "^4.9.6",
+    "jose": "^6.1.0",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
+    "@types/node": "^24.3.0",
     "typescript": "^5.9.2"
   }
 }
