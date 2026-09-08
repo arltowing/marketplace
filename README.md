@@ -46,7 +46,7 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - New adverts are stored centrally, remain pending, and become public after Admin approval.
 
 #### Build37 live Render API link
-- Public GitHub Pages frontend now connects to https://marketplace-c3wq.onrender.com.
+- Public GitHub Pages frontend now connects to .
 - Admin review wording now reflects shared marketplace storage.
 
 #### Build38 AssetTrack 360 navigation link
@@ -95,10 +95,16 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - Admin can approve pending adverts, suspend or reactivate live adverts.
 - Admin can permanently delete adverts, uploaded photos, linked reports and linked enquiries after double confirmation.
 
-######## Build47 Neon-ready database
-- Added Neon PostgreSQL persistence through DATABASE_URL.
-- Removed browser hard-coding to the old Render API origin.
-- Added runtime API configuration for deployment on any Node host.
-- Added automatic schema creation and first-run import from db.json.
-- Added Neon database status to /api/health.
-- Render is no longer required as the database provider.
+######## Build46 Admin Help and Diagnostics
+- Added a dummy-proof Admin Help & Diagnostics page.
+- Added one-click backend health and approved public advert checks.
+- Added direct links to pending review, all advert management, public marketplace and test advert placement.
+- Admin no longer needs to type or edit API URLs manually.
+
+######## Build47 Neon Native Marketplace
+- Removed all live Render API dependencies and Render-specific customer wording.
+- GitHub Pages loads one central api-config.js file.
+- marketplace-api runs as a Neon Function on the production branch.
+- Advert data, approvals, edits, reports and messages use Neon PostgreSQL.
+- Advert photos use Neon Object Storage.
+- Permanent delete removes storage objects before deleting the PostgreSQL row.

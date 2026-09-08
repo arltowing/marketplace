@@ -1,6 +1,13 @@
 User-agent: *
 Allow: /
+
+# Private and application-only areas
+Disallow: /api/
 Disallow: /admin-
 Disallow: /seller-dashboard.html
 Disallow: /seller-listings.html
+Disallow: /seller-login.html
+Disallow: /seller-register.html
+Disallow: /contact-seller.html
+
 Sitemap: https://marketplace.tcstowing.co.za/sitemap.xml
