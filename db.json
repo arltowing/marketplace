@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "schemaVersion": 27,
+    "build": "Build41-clean-live-test",
+    "product": "TCS Marketplace"
+  },
+  "settings": {
+    "demoListingsEnabled": false,
+    "listingExpiryDays": 60,
+    "marketplacePublicName": "TCS Marketplace"
+  },
+  "users": [
+    {
+      "id": "u_admin_1",
+      "role": "admin",
+      "email": "admin@softwaretools.local",
+      "name": "Marketplace Admin",
+      "passwordHash": "6e2bef0a6a94d33ca3d875de52a5080fc1d267003dd23f9f18e71ef2f2c247e4",
+      "status": "active",
+      "createdAt": "2026-06-26T00:00:00Z"
+    },
+    {
+      "id": "u_seller_1",
+      "role": "seller",
+      "email": "seller@softwaretools.local",
+      "name": "Demo Seller",
+      "sellerName": "APC Utilities",
+      "passwordHash": "4c8934905abc115b9d8eed8a814a344e653c71ae4378cedb472d79982c8094b9",
+      "status": "approved",
+      "createdAt": "2026-06-26T00:00:00Z"
+    }
+  ],
+  "sellerApplications": [],
+  "sellerProfiles": [
+    {
+      "id": "sp_001",
+      "userId": "u_seller_1",
+      "sellerName": "APC Utilities",
+      "status": "approved",
+      "payoutMethod": "Manual EFT",
+      "bankName": "Demo Bank",
+      "accountHolder": "APC Utilities",
+      "accountNumber": "demo-ref",
+      "approvedAt": "2026-06-26T00:00:00Z",
+      "approvedBy": "u_admin_1"
+    }
+  ],
+  "products": [],
+  "fileRecords": [],
+  "orders": [],
+  "tokens": [],
+  "checkoutIntents": [],
+  "payoutLedger": [],
+  "sellerBalances": [],
+  "payoutBatches": [],
+  "payfastDiagnostics": [],
+  "notifications": [],
+  "notificationTemplates": [],
+  "events": [],
+  "physicalListings": [],
+  "listingReports": [],
+  "listingMessages": []
+}

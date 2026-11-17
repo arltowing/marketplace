@@ -1,0 +1,1 @@
+const r=require('express').Router();const{requireRole}=require('../auth');const{readDb}=require('../db');r.get('/status',requireRole('admin'),(req,res)=>res.json({schemaVersion:readDb().meta.schemaVersion}));module.exports=r;

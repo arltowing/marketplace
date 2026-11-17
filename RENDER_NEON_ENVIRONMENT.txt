@@ -1,0 +1,13 @@
+Required Render environment variables
+
+DATABASE_URL=<Neon pooled PostgreSQL connection string>
+AWS_ENDPOINT_URL_S3=<Neon branch Object Storage S3 endpoint>
+AWS_ACCESS_KEY_ID=<Neon storage credential token ID>
+AWS_SECRET_ACCESS_KEY=<Neon storage credential secret, shown once>
+AWS_REGION=us-east-2
+NEON_STORAGE_BUCKET=marketplace-listing-images
+
+Create the storage credential in Neon > production branch > Credentials.
+Enable both storage:read and storage:write scopes.
+Never commit real values to GitHub.
+Remove DB_JSON_FILE after the Neon build is live.
