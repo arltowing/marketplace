@@ -1,0 +1,5 @@
+TCS Marketplace Build50 - Image URL Fix
+
+Root cause: apiUrl() prefixed TCS_API_BASE to an already complete Neon Object Storage URL. The browser received a broken combined compute + storage address.
+
+Fix: absolute HTTPS/HTTP, data and blob URLs remain unchanged; relative API paths still use TCS_API_BASE; old https// values are repaired to https://. All marketplace/admin helpers and cache versions were updated.
