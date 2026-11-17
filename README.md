@@ -108,3 +108,12 @@ The inherited demo-header role mechanism must be replaced with secure login sess
 - Advert data, approvals, edits, reports and messages use Neon PostgreSQL.
 - Advert photos use Neon Object Storage.
 - Permanent delete removes storage objects before deleting the PostgreSQL row.
+
+
+######## Build49 VAT-aware pricing
+- Added seller VAT status: No VAT applicable, VAT included, or VAT excluded.
+- Added configurable VAT rate, defaulting to 15%, and optional VAT registration number.
+- Added live customer price preview on Place Advert.
+- Public cards and advert details show the ex-VAT price, VAT amount and VAT-inclusive customer total where applicable.
+- Admin can correct VAT status, rate and VAT registration number.
+- Existing listings default safely to No VAT applicable after migration.
