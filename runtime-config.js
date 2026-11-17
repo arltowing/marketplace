@@ -1,1 +1,0 @@
-window.TCS_MARKETPLACE_API_BASE=window.TCS_MARKETPLACE_API_BASE||window.location.origin;

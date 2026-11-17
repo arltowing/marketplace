@@ -1,1 +1,0 @@
-module.exports={createNotification:(db,o)=>{const n={id:'n_'+Date.now(),status:'queued',createdAt:new Date().toISOString(),...o};db.notifications=db.notifications||[];db.notifications.unshift(n);return n},processQueue:async()=>[]};

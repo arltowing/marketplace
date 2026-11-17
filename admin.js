@@ -1,1 +1,0 @@
-const r=require('express').Router();const{requireRole}=require('../auth');const{readDb}=require('../db');r.get('/orders',requireRole('admin'),(req,res)=>res.json(readDb().orders||[]));module.exports=r;
